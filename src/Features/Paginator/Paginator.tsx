@@ -33,7 +33,6 @@ export const Paginator = React.memo(({totalCount, pageSize, currentPage, getItem
         }
     }
 
-
     const pageList = pages.map(n => {
         const onClickGetUsersByPage = () => {
             document.documentElement.scrollTop = 0;
