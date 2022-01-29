@@ -23,7 +23,6 @@ export const Films = () => {
     }
 
     const filmList = films.Search.map((f, i) => {
-        // return <Film key={index} filmData={film}/>
         return <div key={i}>
             <img src={f.Poster !== 'N/A' ? f.Poster : notFound} alt="poster" width={'200px'}/>
             <ul>
