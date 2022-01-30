@@ -1,51 +1,43 @@
-import React, {ChangeEvent, useState} from "react";
+import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootType} from "../../state/store";
 import {filmsSetCurrentPage, getFilm, InitialStateType} from "../../state/films-reducer";
 import {Paginator} from "../../Features/Paginator/Paginator";
-import notFound from '../../common/images/notFound.png';
+import {Film} from "./Film/Film";
+import s from './Films.module.scss';
+import Grid from "@mui/material/Grid";
 
 
 export const Films = () => {
     const dispatch = useDispatch();
     const films = useSelector<AppRootType, InitialStateType>(state => state.films)
 
-    const [inValue, setInValue] = useState('');
-    const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
-        setInValue(e.currentTarget.value);
-    }
-    const onSearch = () => {
-        dispatch(getFilm(inValue));
-    }
-    const getFilms = (page: number) => {
-        dispatch(getFilm(inValue, page));
+    const getFilmsByPage = (page: number) => {
+        dispatch(getFilm(films.searchValue, page));
         dispatch(filmsSetCurrentPage(page));
     }
 
     const filmList = films.Search.map((f, i) => {
-        return <div key={i}>
-            <img src={f.Poster !== 'N/A' ? f.Poster : notFound} alt="poster" width={'200px'}/>
-            <ul>
-                <li>{f.Title}</li>
-                <li>{f.Type}</li>
-                <li>{f.Year}</li>
-                <li>{f.imdbID}</li>
-            </ul>
-        </div>
+        return (
+            <Film key={i} filmId={f.imdbID}
+                  poster={f.Poster}
+                  title={f.Title}
+                  type={f.Type}
+                  year={f.Year}/>
+        );
     })
 
     return (
-        <div>
-            <div>
-                <input value={inValue} onChange={onChangeSearch} type="text"/>
-                <button onClick={onSearch}>Search</button>
-            </div>
-            {films.error && <span style={{color: 'red'}}>{films.error}</span>}
-            {filmList}
-            {!!films.totalResults && <Paginator totalCount={films.totalResults}
-                                                  pageSize={10}
-                                                  currentPage={films.currentPage}
-                                                  getItems={getFilms}/>}
+        <div className={s.filmsWrapper}>
+            {films.error && <span className={s.error}>{films.error}</span>}
+            <Grid container rowSpacing={2} columnSpacing={1} justifyContent={"center"}>
+                {filmList}
+            </Grid>
+            {!!films.totalResults &&
+                <Paginator totalCount={films.totalResults}
+                           pageSize={10}
+                           currentPage={films.currentPage}
+                           getItems={getFilmsByPage}/>}
         </div>
     )
 }

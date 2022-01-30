@@ -2,11 +2,38 @@ import {Dispatch} from "redux";
 import {api} from "../API/api";
 
 const initialState: InitialStateType = {
-    Response: '',
     Search: [],
     totalResults: 0,
     error: '',
     currentPage: 1,
+    aboutFilm: {
+        Title: '',
+        Year: '',
+        Rated: '',
+        Released: '',
+        Runtime: '',
+        Genre: '',
+        Director: '',
+        Writer: '',
+        Actors: '',
+        Plot: '',
+        Language: '',
+        Country: '',
+        Awards: '',
+        Poster: '',
+        Metascore: '',
+        ImdbRating: '',
+        ImdbVotes: '',
+        ImdbID: '',
+        Type: '',
+        DVD: '',
+        BoxOffice: '',
+        Production: '',
+        Website: '',
+        Response: '',
+        Ratings: [],
+    },
+    searchValue: '',
 }
 
 export const filmsReducer = (state = initialState, action: actionsType) => {
@@ -16,33 +43,59 @@ export const filmsReducer = (state = initialState, action: actionsType) => {
         case "FILMS/SET-CURRENT-PAGE":
             return {...state, currentPage: action.currentPage}
         case "FILMS/SET-ERROR":
-            return {...state, error: action.error}
+            return {...state, error: action.error, Search: [], totalResults: 0}
+        case "FILMS/SET-FILM-INFO":
+            return {...state, aboutFilm: action.filmData}
+        case "FILMS/SET-SEARCH-VALUE":
+            return {...state, searchValue: action.searchValue}
         default:
             return state;
     }
 }
 
 
-type actionsType = ReturnType<typeof filmsSetData> | ReturnType<typeof filmsSetError>
+type actionsType = ReturnType<typeof filmsSetData>
+    | ReturnType<typeof filmsSetError>
     | ReturnType<typeof filmsSetCurrentPage>
-export const filmsSetData = (data: InitialStateType) => ({type: 'FILMS/SET-DATA', data} as const)
+    | ReturnType<typeof filmsSetFilmInfo>
+    | ReturnType<typeof filmsSetSearchValue>
+
+export const filmsSetData = (data: FilmsListType) => ({type: 'FILMS/SET-DATA', data} as const)
 export const filmsSetError = (error: string) => ({type: 'FILMS/SET-ERROR', error} as const)
 export const filmsSetCurrentPage = (currentPage: number) => {
     return {type: 'FILMS/SET-CURRENT-PAGE', currentPage} as const
 }
+export const filmsSetFilmInfo = (filmData: AboutFilmType) => {
+    return {type: 'FILMS/SET-FILM-INFO', filmData} as const
+}
+export const filmsSetSearchValue = (searchValue: string) => {
+    return {type: 'FILMS/SET-SEARCH-VALUE', searchValue} as const
+}
 
 
 export const getFilm = (title: string, page?: number) => async (dispatch: Dispatch) => {
-    const response = await api.searchFilm(title, page)
-    if (response.data.Response === 'False') {
+    const response = await api.getFilmsBySearch(title, page)
+    if (response.data.Response === 'False' && response.data.Error) {
         dispatch(filmsSetError(response.data.Error));
     } else {
         dispatch(filmsSetData(response.data));
     }
 }
+export const getFilmInfo = (filmId: string) => async (dispatch: Dispatch) => {
+    const response = await api.getAboutFilm(filmId);
+    dispatch(filmsSetFilmInfo(response.data));
+}
 
-export type InitialStateType = FilmsListType & { error: string, currentPage: number }
-export type FilmType = {
+export type InitialStateType = {
+    error: string
+    currentPage: number
+    aboutFilm: AboutFilmType
+    Search: searchFilmsType[]
+    totalResults: number
+    searchValue: string
+}
+
+export type AboutFilmType = {
     Title: string,
     Year: string,
     Rated: string,
@@ -70,10 +123,11 @@ export type FilmType = {
     Ratings: RatingsType[],
 };
 export type FilmsListType = {
-    Response: string
+    // Response: string
     Search: searchFilmsType[]
     totalResults: number
 }
+
 export type searchFilmsType = {
     Poster: string
     Title: string

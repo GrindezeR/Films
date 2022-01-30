@@ -1,0 +1,37 @@
+.pagesWrapper {
+    display: flex;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    gap: 10px;
+    justify-content: center;
+    font-family: Bahnschrift, sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+
+    .pageList {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+
+        .currentPage {
+            color: white;
+            font-size: 28px;
+        }
+    }
+
+    .page {
+        cursor: pointer;
+        user-select: none;
+
+        &:hover {
+            color: white;
+        }
+    }
+}
+
+
+
+
+
+
+

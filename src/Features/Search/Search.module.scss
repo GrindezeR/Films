@@ -1,0 +1,19 @@
+.searchWrapper {
+  display: flex;
+  margin: 20px auto;
+  align-items: flex-end;
+  justify-content: center;
+
+  .search {
+    width: 400px;
+  }
+
+  .searchBtn {
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    border-radius: 20px;
+    margin-left: 10px;
+    height: 30px;
+  }
+}

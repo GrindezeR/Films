@@ -1,35 +1,51 @@
 import React from "react";
-import {FilmType} from "../../../state/films-reducer";
+import notFound from "../../../common/images/notFound.png";
+import {useDispatch} from "react-redux";
+import {getFilmInfo} from "../../../state/films-reducer";
+import {Link} from "react-router-dom";
+import s from './Film.module.scss';
+import {Card, CardContent, CardMedia, Grid, Typography} from "@mui/material";
 
 type PropsType = {
-    filmData: FilmType
+    poster: string
+    title: string
+    type: string
+    year: string
+    filmId: string
 }
+export const Film = ({poster, title, type, year, filmId}: PropsType) => {
+    const dispatch = useDispatch();
 
-export const Film = ({filmData}: PropsType) => {
-    const dataList = Object.keys(filmData).map((title, index) => {
-        let value = filmData[title as keyof FilmType]
+    let niceType = type.split('');
+    niceType[0] = niceType[0].toUpperCase();
 
-        if (typeof value === 'string') {
-            return <li key={index}>{title} - {value}</li>
-        } else {
-            const ratingList = value.map((r, i) => <li key={i}>{r.Source} - {r.Value}</li>)
-            return (
-                <React.Fragment key={index}>
-                    <li>{title}:</li>
-                    <ul>{ratingList}</ul>
-                </React.Fragment>
-            );
-        }
-    })
+    const aboutFilmHandler = () => {
+        dispatch(getFilmInfo(filmId));
+    }
 
     return (
-        <div>
-            <div>
-                <img src={filmData.Poster} alt="Poster"/>
-            </div>
-            <ul>
-                {dataList}
-            </ul>
-        </div>
-    )
+        <Grid item xs={2} margin={'0 10px'} alignContent={'center'}>
+
+            <Card sx={{maxWidth: 345}}>
+                <Link to={'/about'}>
+                    <CardMedia component={'img'}
+                               onClick={aboutFilmHandler}
+                               image={poster !== 'N/A' ? poster : notFound}
+                               alt={'poster'}>
+                    </CardMedia>
+                </Link>
+
+                <CardContent className={s.aboutFilm}>
+                    <Typography gutterBottom variant="h6" component="div">
+                        {title}
+                    </Typography>
+                    <Typography color="text.secondary">
+                        <div>{niceType}</div>
+                        <div>{year}</div>
+                    </Typography>
+                </CardContent>
+            </Card>
+        </Grid>
+
+    );
 }

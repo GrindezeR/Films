@@ -1,0 +1,17 @@
+.app {
+
+  .appBar {
+    display: flex;
+    justify-content: center;
+    height: 50px;
+    user-select: none;
+    background: linear-gradient(to right, #16BFFD, #CB3066);
+
+    .letterM {
+      font-size: 32px;
+      color: #262626;
+      font-weight: bold;
+    }
+  }
+}
+
