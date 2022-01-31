@@ -59,11 +59,11 @@ export const Paginator = React.memo(({totalCount, pageSize, currentPage, getItem
     //COMPLETE JSX
     return (
         <div className={s.pagesWrapper}>
-            <span className={s.page} onClick={firstPageHandler}>{'<<'}</span>
+            <span className={s.page} onClick={firstPageHandler}>&#8926;</span>
             <div className={s.pageList}>
                 {pageList}
             </div>
-            <span className={s.page} onClick={lastPageHandler}>{'>>'}</span>
+            <span className={s.page} onClick={lastPageHandler}>&#8927;</span>
         </div>
     );
 })

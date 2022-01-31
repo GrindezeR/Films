@@ -18,11 +18,15 @@ export const Search = () => {
     }
     const input = useRef<HTMLInputElement>(null);
     const onSearch = () => {
-        input.current?.blur();
-        dispatch(getFilms(inputValue));
-        dispatch(filmsSetCurrentPage(1))
-        dispatch(filmsSetError(''));
-        navigate('/');
+        if (inputValue.trim() !== '') {
+            input.current?.blur();
+            dispatch(getFilms(inputValue));
+            dispatch(filmsSetCurrentPage(1))
+            dispatch(filmsSetError(''));
+            navigate('/');
+        } else {
+            dispatch(filmsSetError('Input search value!'));
+        }
     }
     const onEnterSearch = (e: KeyboardEvent) => {
         if (e.key === 'Enter') {
