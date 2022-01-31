@@ -1,24 +1,26 @@
 import React, {ChangeEvent, KeyboardEvent} from "react";
 import s from './Search.module.scss';
-import {filmsSetError, filmsSetSearchValue, getFilm} from "../../state/films-reducer";
+import {filmsSetCurrentPage, filmsSetError, filmsSetSearchValue, getFilms} from "../../state/films-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootType} from "../../state/store";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import SavedSearch from "@mui/icons-material/SavedSearch";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 
 export const Search = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const inputValue = useSelector<AppRootType, string>(state => state.films.searchValue);
     const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(filmsSetSearchValue(e.currentTarget.value));
     }
     const onSearch = () => {
-        dispatch(getFilm(inputValue));
-        // dispatch(filmsSetSearchValue(''));
+        dispatch(getFilms(inputValue));
+        dispatch(filmsSetCurrentPage(1))
         dispatch(filmsSetError(''));
+        navigate('/');
     }
     const onEnterSearch = (e: KeyboardEvent) => {
         if (e.key === 'Enter') {
@@ -35,9 +37,9 @@ export const Search = () => {
                        color={'success'}
                        value={inputValue} onChange={onChangeSearch}/>
 
-            <IconButton onClick={onSearch}>
+            <IconButton size={'small'} onClick={onSearch}>
                 <Link to={'/'}>
-                    <SavedSearch/>
+                    <SavedSearch color={'info'}/>
                 </Link>
             </IconButton>
         </div>

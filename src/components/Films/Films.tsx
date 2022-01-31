@@ -1,7 +1,7 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootType} from "../../state/store";
-import {filmsSetCurrentPage, getFilm, InitialStateType} from "../../state/films-reducer";
+import {filmsSetCurrentPage, getFilms, InitialStateType} from "../../state/films-reducer";
 import {Paginator} from "../../Features/Paginator/Paginator";
 import {Film} from "./Film/Film";
 import s from './Films.module.scss';
@@ -13,7 +13,7 @@ export const Films = () => {
     const films = useSelector<AppRootType, InitialStateType>(state => state.films)
 
     const getFilmsByPage = (page: number) => {
-        dispatch(getFilm(films.searchValue, page));
+        dispatch(getFilms(films.searchValue, page));
         dispatch(filmsSetCurrentPage(page));
     }
 
@@ -30,14 +30,21 @@ export const Films = () => {
     return (
         <div className={s.filmsWrapper}>
             {films.error && <span className={s.error}>{films.error}</span>}
-            <Grid container rowSpacing={2} columnSpacing={1} justifyContent={"center"}>
+            <Grid className={s.filmsContainer}
+                  container
+                  rowSpacing={2}
+                  columnSpacing={2}
+                  justifyContent={"center"}
+            >
                 {filmList}
             </Grid>
-            {!!films.totalResults &&
-                <Paginator totalCount={films.totalResults}
-                           pageSize={10}
-                           currentPage={films.currentPage}
-                           getItems={getFilmsByPage}/>}
+            <div className={s.pagesWrapper}>
+                {!!films.totalResults &&
+                    <Paginator totalCount={films.totalResults}
+                               pageSize={10}
+                               currentPage={films.currentPage}
+                               getItems={getFilmsByPage}/>}
+            </div>
         </div>
     )
 }

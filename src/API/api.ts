@@ -8,7 +8,7 @@ const instance = axios.create({
 
 export const api = {
     getFilmsBySearch(title: string, page?: number) {
-        return instance.get<GetFilmsResponseType>(`${apiKey}s=${title}&plot=full${page ? `&page=${page}` : ''}`)
+        return instance.get<GetFilmsResponseType>(`${apiKey}s=${title}${page ? `&page=${page}` : ''}`)
     },
     getAboutFilm(filmId: string) {
         return instance.get(`${apiKey}i=${filmId}&plot=full`)

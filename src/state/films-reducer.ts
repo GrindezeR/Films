@@ -72,13 +72,12 @@ export const filmsSetSearchValue = (searchValue: string) => {
     return {type: 'FILMS/SET-SEARCH-VALUE', searchValue} as const
 }
 
-
-export const getFilm = (title: string, page?: number) => async (dispatch: Dispatch) => {
+export const getFilms = (title: string, page?: number) => async (dispatch: Dispatch) => {
     const response = await api.getFilmsBySearch(title, page)
-    if (response.data.Response === 'False' && response.data.Error) {
-        dispatch(filmsSetError(response.data.Error));
-    } else {
+    if (response.data.Response === 'True') {
         dispatch(filmsSetData(response.data));
+    } else {
+        dispatch(filmsSetError(response.data.Error));
     }
 }
 export const getFilmInfo = (filmId: string) => async (dispatch: Dispatch) => {
@@ -94,7 +93,6 @@ export type InitialStateType = {
     totalResults: number
     searchValue: string
 }
-
 export type AboutFilmType = {
     Title: string,
     Year: string,
@@ -123,11 +121,9 @@ export type AboutFilmType = {
     Ratings: RatingsType[],
 };
 export type FilmsListType = {
-    // Response: string
     Search: searchFilmsType[]
     totalResults: number
 }
-
 export type searchFilmsType = {
     Poster: string
     Title: string

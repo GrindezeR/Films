@@ -1,3 +1,29 @@
-.aboutFilm {
-  text-align: center;
+.cardWrapper {
+
+  a {
+    text-decoration: none;
+  }
+
+  .card {
+    cursor: pointer;
+    border-radius: 10px;
+
+    &:hover {
+      box-shadow: 0 8px 9px -5px rgb(0 0 0 / 20%), 0px 15px 22px 2px rgb(0 0 0 / 14%), 0px 6px 28px 5px rgb(0 0 0 / 12%);
+    }
+  }
+
+  .aboutFilm {
+    text-align: center;
+
+    .title {
+    }
+
+    .year, .type {
+      display: block;
+    }
+  }
 }
+
+
+

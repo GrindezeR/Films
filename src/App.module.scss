@@ -1,11 +1,18 @@
 .app {
+  display: flex;
+  flex-direction: column;
+
+  .content {
+    flex-grow: 1;
+  }
 
   .appBar {
     display: flex;
     justify-content: center;
     height: 50px;
     user-select: none;
-    background: linear-gradient(to right, #16BFFD, #CB3066);
+    background: linear-gradient(to right, #40e0d0, rgb(255, 0, 128, .8));
+    //background: linear-gradient(to right, #16BFFD, #CB3066);
 
     .letterM {
       font-size: 32px;

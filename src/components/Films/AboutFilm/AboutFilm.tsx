@@ -2,42 +2,57 @@ import React from "react";
 import {AboutFilmType} from "../../../state/films-reducer";
 import {useSelector} from "react-redux";
 import {AppRootType} from "../../../state/store";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import s from './AboutFilm.module.scss';
+import {Button, Paper} from "@mui/material";
+import noPoster from '../../../common/images/notFound.png';
 
-type PropsType = {
-
-}
-
-export const AboutFilm = ({}: PropsType) => {
+export const AboutFilm = () => {
     const filmData = useSelector<AppRootType, AboutFilmType>(state => state.films.aboutFilm)
+    const navigate = useNavigate();
 
     const dataList = Object.keys(filmData).map((title, index) => {
         let value = filmData[title as keyof AboutFilmType]
 
-        if (typeof value === 'string') {
-            return <li key={index}>{title} - {value}</li>
-        } else {
-            const ratingList = value.map((r, i) => <li key={i}>{r.Source} - {r.Value}</li>)
-            return (
-                <React.Fragment key={index}>
-                    <li>{title}:</li>
-                    <ul>{ratingList}</ul>
-                </React.Fragment>
-            );
-        }
+        if (title !== 'Response') {
+            if (typeof value === 'string') {
+                if (title !== 'Poster') {
+                    return <li key={index}><b>{title}</b>: {value}</li>
+                } else {
+                    return <li key={index}>
+                        <b>{title}</b>: <a rel={'noreferrer'} target={'_blank'} href={value}>{value}</a>
+                    </li>
+                }
+            } else {
+                const ratingList = value.map((r, i) =>
+                    <div key={i}><b>{r.Source}</b> - {r.Value}</div>)
+                return (
+                    <React.Fragment key={index}>
+                        <li><b>{title}</b>:</li>
+                        <li>{ratingList}</li>
+                    </React.Fragment>
+                );
+            }
+        } else return null
     })
 
+    const onBackClickHandler = () => navigate('/');
+
     return (
-        <div>
-            <Link to={'/'}>
-                <button>Back</button>
-            </Link>
-            <div>
-                <img src={filmData.Poster} alt="Poster"/>
+        <div className={s.aboutWrapper}>
+            <h3>ABOUT FILM</h3>
+            <div className={s.contentWrapper}>
+                <div>
+                    <img className={s.poster} src={filmData.Poster !== 'N/A' ? filmData.Poster : noPoster}
+                         alt="Poster"/>
+                </div>
+                <Paper className={s.data}>
+                    {dataList}
+                </Paper>
             </div>
-            <ul>
-                {dataList}
-            </ul>
+            <div className={s.buttonWrapper}>
+                <Button onClick={onBackClickHandler} color={'info'} variant={'contained'}>Back</Button>
+            </div>
         </div>
     )
 }

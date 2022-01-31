@@ -1,0 +1,40 @@
+.aboutWrapper {
+  display: flex;
+  flex-direction: column;
+  font-family: Roboto, sans-serif;
+  align-items: center;
+  min-height: 80vh;
+  border-radius: 20px;
+  padding: 0 10px;
+
+  .buttonWrapper {
+    margin-top: 20px;
+  }
+
+  .contentWrapper {
+    display: flex;
+    word-break: break-word;
+    justify-content: center;
+    gap: 10px;
+    max-width: 1200px;
+
+    @media (max-width: 660px) {
+      flex-wrap: wrap;
+    }
+
+    .poster {
+      max-width: 400px;
+      border-radius: 10px;
+    }
+
+    .data {
+      background-color: rgba(255, 255, 255, .5);
+      border-radius: 10px;
+      padding: 10px;
+    }
+  }
+
+  li {
+    list-style: none;
+  }
+}
