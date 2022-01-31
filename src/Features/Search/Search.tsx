@@ -39,14 +39,15 @@ export const Search = () => {
                        ref={input}
                        onKeyPress={onEnterSearch}
                        className={s.search}
-                       label="Search film"
+                       type={'search'}
+                       label="Search Film"
                        variant="standard"
                        color={'success'}
                        value={inputValue} onChange={onChangeSearch}/>
 
             <IconButton size={'small'} onClick={onSearch}>
                 <Link to={'/'}>
-                    <SavedSearch color={'info'}/>
+                    <SavedSearch color={'success'}/>
                 </Link>
             </IconButton>
         </div>
