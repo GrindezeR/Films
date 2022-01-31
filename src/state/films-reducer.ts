@@ -1,5 +1,9 @@
 import {Dispatch} from "redux";
 import {api} from "../API/api";
+import {appSetLoading} from "./app-reducer";
+import axios from "axios";
+import {Simulate} from "react-dom/test-utils";
+
 
 const initialState: InitialStateType = {
     Search: [],
@@ -36,7 +40,7 @@ const initialState: InitialStateType = {
     searchValue: '',
 }
 
-export const filmsReducer = (state = initialState, action: actionsType) => {
+export const filmsReducer = (state = initialState, action: ActionsType) => {
     switch (action.type) {
         case "FILMS/SET-DATA":
             return {...state, ...action.data, totalResults: Number(action.data.totalResults)}
@@ -54,7 +58,7 @@ export const filmsReducer = (state = initialState, action: actionsType) => {
 }
 
 
-type actionsType = ReturnType<typeof filmsSetData>
+type ActionsType = ReturnType<typeof filmsSetData>
     | ReturnType<typeof filmsSetError>
     | ReturnType<typeof filmsSetCurrentPage>
     | ReturnType<typeof filmsSetFilmInfo>
@@ -73,16 +77,38 @@ export const filmsSetSearchValue = (searchValue: string) => {
 }
 
 export const getFilms = (title: string, page?: number) => async (dispatch: Dispatch) => {
-    const response = await api.getFilmsBySearch(title, page)
-    if (response.data.Response === 'True') {
-        dispatch(filmsSetData(response.data));
-    } else {
-        dispatch(filmsSetError(response.data.Error));
+    dispatch(appSetLoading(true));
+    try {
+        const response = await api.getFilmsBySearch(title, page)
+        if (response.data.Response === 'True') {
+            dispatch(filmsSetData(response.data));
+        } else {
+            dispatch(filmsSetError(response.data.Error));
+        }
+    } catch (e) {
+        if (axios.isAxiosError(e)) {
+            dispatch(filmsSetError(e.message));
+        }
+    } finally {
+        dispatch(appSetLoading(false));
     }
 }
 export const getFilmInfo = (filmId: string) => async (dispatch: Dispatch) => {
-    const response = await api.getAboutFilm(filmId);
-    dispatch(filmsSetFilmInfo(response.data));
+    dispatch(appSetLoading(true));
+    try {
+        const response = await api.getAboutFilm(filmId);
+        if (response.data.Response === 'True') {
+            dispatch(filmsSetFilmInfo(response.data));
+        } else {
+            dispatch(filmsSetError(response.data.Error));
+        }
+    } catch (e) {
+        if (axios.isAxiosError(e)) {
+            dispatch(filmsSetError(e.message));
+        }
+    } finally {
+        dispatch(appSetLoading(false));
+    }
 }
 
 export type InitialStateType = {

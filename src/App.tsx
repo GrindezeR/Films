@@ -10,36 +10,42 @@ import Toolbar from '@mui/material/Toolbar';
 import okko from './common/images/okko.png';
 import {useSelector} from "react-redux";
 import {AppRootType} from "./state/store";
-import {AboutFilmType} from "./state/films-reducer";
+import {AboutFilmType, InitialStateType} from "./state/films-reducer";
+import {Preloader} from "./Features/Preloader/Preloader";
 
 function App() {
-    const filmData = useSelector<AppRootType, AboutFilmType>(state => state.films.aboutFilm)
+    const filmData = useSelector<AppRootType, InitialStateType>(state => state.films);
+    const isLoading = useSelector<AppRootType, boolean>(state => state.app.isLoading);
     let navigate = useNavigate()
 
     useEffect(() => {
-        if (!filmData.Title) {
+        if (!filmData.aboutFilm.Title) {
             navigate('/')
         }
     }, [])
 
     return (
-        <div className={s.app}>
-            <Box>
-                <AppBar className={s.appBar} position="static">
-                    <Toolbar>
-                        <span className={s.letterM}>M</span><img src={okko} alt="mokko" height={'80px'}/>
-                    </Toolbar>
-                </AppBar>
-            </Box>
+        <>
+            {isLoading && <Preloader type={'circle'}/>}
+            <div className={s.app}>
+                <Box>
+                    <AppBar className={s.appBar} position="static">
+                        <Toolbar className={s.logo}>
+                            <span className={s.logoLetter}>M</span>
+                            <img className={s.logoImage} src={okko} alt="mokko" height={'80px'}/>
+                        </Toolbar>
+                    </AppBar>
+                </Box>
 
-            <Search/>
-            <div className={s.content}>
-                <Routes>
-                    <Route path={'/'} element={<Films/>}/>
-                    <Route path={`/about`} element={<AboutFilm/>}/>
-                </Routes>
+                <Search/>
+                <div className={s.content}>
+                    <Routes>
+                        <Route path={'/'} element={filmData.Search && <Films/>}/>
+                        <Route path={`/about`} element={filmData.aboutFilm.Title && <AboutFilm/>}/>
+                    </Routes>
+                </div>
             </div>
-        </div>
+        </>
     );
 }
 

@@ -1,0 +1,42 @@
+/*Circle*/
+.preloaderCircle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    align-self: center;
+    background: url('../../common/images/preloader.gif') center no-repeat rgba(217, 210, 193,0.4);
+    background-size: 100px;
+    z-index: 1;
+}
+
+.back {
+    position: fixed;
+    opacity: .8;
+    min-height: 100vh;
+    width: 100%;
+    background-color: black;
+}
+
+/*Line*/
+.preloader {
+    position: absolute;
+    width: 0;
+    top: 0;
+    left: 0;
+    height: 5px;
+    background: linear-gradient(to right, #009fff, #ec2f4b, #00db4a);
+    animation: loading 2s ease-in-out forwards infinite;
+}
+
+@keyframes loading {
+    to {
+        width: 100%;
+    }
+}

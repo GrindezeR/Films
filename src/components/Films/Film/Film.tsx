@@ -45,6 +45,5 @@ export const Film = ({poster, title, type, year, filmId}: PropsType) => {
                 </CardContent>
             </Card>
         </Grid>
-
     );
 }
