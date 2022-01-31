@@ -3,7 +3,7 @@ import {AboutFilmType, FilmsListType} from "../state/films-reducer";
 
 const apiKey = '?apikey=48c63132&'
 const instance = axios.create({
-    baseURL: `http://www.omdbapi.com/`
+    baseURL: `https://www.omdbapi.com/`
 })
 
 export const api = {
