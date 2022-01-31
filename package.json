@@ -1,8 +1,8 @@
 {
   "name": "films",
+  "homepage": "https://grindezer.github.io/Films",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://grindezer.github.io/Films",
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
