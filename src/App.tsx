@@ -10,7 +10,7 @@ import Toolbar from '@mui/material/Toolbar';
 import okko from './common/images/okko.png';
 import {useSelector} from "react-redux";
 import {AppRootType} from "./state/store";
-import {AboutFilmType, InitialStateType} from "./state/films-reducer";
+import {InitialStateType} from "./state/films-reducer";
 import {Preloader} from "./Features/Preloader/Preloader";
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
             <div className={s.app}>
                 <Box>
                     <AppBar className={s.appBar} position="static">
-                        <Toolbar className={s.logo}>
+                        <Toolbar className={s.barContainer}>
                             <span className={s.logoLetter}>M</span>
                             <img className={s.logoImage} src={okko} alt="mokko" height={'80px'}/>
                         </Toolbar>

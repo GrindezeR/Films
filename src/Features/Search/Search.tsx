@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent} from "react";
+import React, {ChangeEvent, KeyboardEvent, useRef} from "react";
 import s from './Search.module.scss';
 import {filmsSetCurrentPage, filmsSetError, filmsSetSearchValue, getFilms} from "../../state/films-reducer";
 import {useDispatch, useSelector} from "react-redux";
@@ -16,7 +16,9 @@ export const Search = () => {
     const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(filmsSetSearchValue(e.currentTarget.value));
     }
+    const input = useRef<HTMLInputElement>(null);
     const onSearch = () => {
+        input.current?.blur();
         dispatch(getFilms(inputValue));
         dispatch(filmsSetCurrentPage(1))
         dispatch(filmsSetError(''));
@@ -30,6 +32,7 @@ export const Search = () => {
     return (
         <div className={s.searchWrapper}>
             <TextField id="standard-basic"
+                       ref={input}
                        onKeyPress={onEnterSearch}
                        className={s.search}
                        label="Search film"
