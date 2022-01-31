@@ -7,7 +7,7 @@ import {Search} from "./Features/Search/Search";
 import AppBar from "@mui/material/AppBar";
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import okko from './common/images/okko.png';
+import logo from './common/images/logo.png';
 import {useSelector} from "react-redux";
 import {AppRootType} from "./state/store";
 import {InitialStateType} from "./state/films-reducer";
@@ -31,8 +31,7 @@ function App() {
                 <Box>
                     <AppBar className={s.appBar} position="static">
                         <Toolbar className={s.barContainer}>
-                            <span className={s.logoLetter}>M</span>
-                            <img className={s.logoImage} src={okko} alt="mokko" height={'80px'}/>
+                            <img className={s.logoImage} src={logo} alt="cinema" />
                         </Toolbar>
                     </AppBar>
                 </Box>

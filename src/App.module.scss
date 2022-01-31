@@ -17,18 +17,9 @@
       display: flex;
       align-items: center;
 
-      .logoLetter {
-        display: block;
-        padding: 18px 0;
-        font-size: 32px;
-        color: #262626;
-        font-weight: bold;
-        //border: 1px solid red;
-      }
-
       .logoImage {
         display: block;
-        //border: 1px solid red;
+        height: 35px;
       }
     }
   }
