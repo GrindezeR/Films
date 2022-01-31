@@ -39,7 +39,6 @@ export const Search = () => {
                        ref={input}
                        onKeyPress={onEnterSearch}
                        className={s.search}
-                       type={'search'}
                        label="Search Film"
                        variant="standard"
                        color={'success'}
