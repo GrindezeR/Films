@@ -5,16 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
 import {store} from "./state/store";
-import {BrowserRouter} from "react-router-dom";
+import {HashRouter} from "react-router-dom";
 import {StyledEngineProvider} from '@mui/material/styles';
 
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
             <StyledEngineProvider injectFirst>
-                <BrowserRouter>
+                <HashRouter>
                     <App/>
-                </BrowserRouter>
+                </HashRouter>
             </StyledEngineProvider>
         </Provider>
     </React.StrictMode>,
