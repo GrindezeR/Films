@@ -8,6 +8,7 @@ import s from './Films.module.scss';
 import Grid from "@mui/material/Grid";
 
 
+
 export const Films = () => {
     const dispatch = useDispatch();
     const films = useSelector<AppRootType, InitialStateType>(state => state.films)
@@ -19,11 +20,11 @@ export const Films = () => {
 
     const filmList = films.Search.map((f, i) => {
         return (
-            <Film key={i} filmId={f.imdbID}
-                  poster={f.Poster}
-                  title={f.Title}
-                  type={f.Type}
-                  year={f.Year}/>
+                <Film key={i} filmId={f.imdbID}
+                      poster={f.Poster}
+                      title={f.Title}
+                      type={f.Type}
+                      year={f.Year}/>
         );
     })
 
@@ -33,7 +34,7 @@ export const Films = () => {
             <Grid className={s.filmsContainer}
                   container
                   rowSpacing={2}
-                  columnSpacing={2}
+                  columnSpacing={3}
                   justifyContent={"center"}
             >
                 {filmList}
