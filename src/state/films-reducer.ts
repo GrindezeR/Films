@@ -60,6 +60,13 @@ const slice = createSlice({
         filmsSetSearchValue(state, action: PayloadAction<{ searchValue: string }>) {
             state.searchValue = action.payload.searchValue;
         },
+        filmsClearData(state) {
+            state.Search = [];
+            state.totalResults = 0;
+        },
+        filmsAboutClearData(state) {
+            state.aboutFilm = {...initialState.aboutFilm};
+        },
     }
 })
 
@@ -70,6 +77,8 @@ export const {filmsSetError} = slice.actions;
 export const {filmsSetCurrentPage} = slice.actions;
 export const {filmsSetFilmInfo} = slice.actions;
 export const {filmsSetSearchValue} = slice.actions;
+export const {filmsClearData} = slice.actions;
+export const {filmsAboutClearData} = slice.actions;
 
 // export const filmsSetData = (data: FilmsListType) => ({type: 'FILMS/SET-DATA', data} as const)
 // export const filmsSetError = (error: string) => ({type: 'FILMS/SET-ERROR', error} as const)

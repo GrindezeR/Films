@@ -1,6 +1,12 @@
 import React, {ChangeEvent, KeyboardEvent, useRef} from "react";
 import s from './Search.module.scss';
-import {filmsSetCurrentPage, filmsSetError, filmsSetSearchValue, getFilms} from "../../state/films-reducer";
+import {
+    filmsClearData,
+    filmsSetCurrentPage,
+    filmsSetError,
+    filmsSetSearchValue,
+    getFilms
+} from "../../state/films-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootType} from "../../state/store";
 import TextField from "@mui/material/TextField";
@@ -20,6 +26,7 @@ export const Search = () => {
     const onSearch = () => {
         if (inputValue.trim() !== '') {
             input.current?.blur();
+            dispatch(filmsClearData());
             dispatch(getFilms(inputValue));
             dispatch(filmsSetCurrentPage({currentPage: 1}))
             dispatch(filmsSetError({error: ''}));

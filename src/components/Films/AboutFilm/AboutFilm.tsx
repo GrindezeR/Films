@@ -1,6 +1,6 @@
 import React from "react";
-import {AboutFilmType} from "../../../state/films-reducer";
-import {useSelector} from "react-redux";
+import {AboutFilmType, filmsAboutClearData} from "../../../state/films-reducer";
+import {useDispatch, useSelector} from "react-redux";
 import {AppRootType} from "../../../state/store";
 import {useNavigate} from "react-router-dom";
 import s from './AboutFilm.module.scss';
@@ -8,6 +8,7 @@ import {Button, Paper} from "@mui/material";
 import noPoster from '../../../common/images/notFound.png';
 
 export const AboutFilm = () => {
+    const dispatch = useDispatch();
     const filmData = useSelector<AppRootType, AboutFilmType>(state => state.films.aboutFilm)
     const navigate = useNavigate();
 
@@ -36,7 +37,10 @@ export const AboutFilm = () => {
         } else return null
     })
 
-    const onBackClickHandler = () => navigate('/');
+    const onBackClickHandler = () => {
+        dispatch(filmsAboutClearData());
+        navigate('/');
+    }
 
     return (
         <div className={s.aboutWrapper}>
