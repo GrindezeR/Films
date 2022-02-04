@@ -6,6 +6,23 @@
   min-height: 80vh;
   border-radius: 20px;
   padding: 0 10px;
+  opacity: 0;
+
+  animation: fade .5s ease;
+  animation-fill-mode: forwards;
+  transition: .5s ease;
+
+  @keyframes fade {
+    0% {
+      opacity: 0
+    }
+    50% {
+      opacity: .5
+    }
+    100% {
+      opacity: 1
+    }
+  }
 
   .buttonWrapper {
     margin: 20px 0;

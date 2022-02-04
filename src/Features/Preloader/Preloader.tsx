@@ -1,5 +1,5 @@
 import React from "react";
-import s from './Preloader.module.css';
+import s from './Preloader.module.scss';
 
 type PropsType = {
     type?: 'line' | 'circle'
@@ -8,7 +8,7 @@ type PropsType = {
 export const Preloader = ({type}: PropsType) => {
     return (
         <>
-            <div className={s.back}></div>
+            <div className={s.back}/>
             <div className={type === "circle" ? s.preloaderCircle : s.preloader}/>
         </>
     );

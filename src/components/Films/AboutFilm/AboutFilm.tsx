@@ -2,7 +2,7 @@ import React from "react";
 import {AboutFilmType} from "../../../state/films-reducer";
 import {useSelector} from "react-redux";
 import {AppRootType} from "../../../state/store";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import s from './AboutFilm.module.scss';
 import {Button, Paper} from "@mui/material";
 import noPoster from '../../../common/images/notFound.png';

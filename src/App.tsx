@@ -12,6 +12,7 @@ import {useSelector} from "react-redux";
 import {AppRootType} from "./state/store";
 import {InitialStateType} from "./state/films-reducer";
 import {Preloader} from "./Features/Preloader/Preloader";
+import Particles from "react-tsparticles";
 
 function App() {
     const filmData = useSelector<AppRootType, InitialStateType>(state => state.films);
@@ -26,12 +27,100 @@ function App() {
 
     return (
         <>
+            <Particles
+                id="tsparticles"
+                options={{
+                    background: {
+                        color: {
+                            value: "#91ede4",
+                        },
+                    },
+                    backgroundMode: {
+                        zIndex: -10,
+                    },
+                    fpsLimit: 120,
+                    interactivity: {
+                        events: {
+                            onClick: {
+                                enable: true,
+                                mode: "push",
+                            },
+                            onHover: {
+                                enable: true,
+                                mode: "attract",
+                            },
+                            resize: true,
+                        },
+                        modes: {
+                            bubble: {
+                                distance: 400,
+                                duration: 2,
+                                opacity: 0.8,
+                                size: 140,
+                            },
+                            push: {
+                                quantity: 4,
+                            },
+                            attract: {
+                                distance: 200,
+                                duration: 0.4,
+                                factor: 1
+                            },
+                            repulse: {
+                                distance: 80,
+                                duration: 0.4,
+                            },
+                        },
+                    },
+                    particles: {
+                        color: {
+                            value: "#000",
+                        },
+                        links: {
+                            color: "#000",
+                            distance: 150,
+                            enable: true,
+                            opacity: 0.5,
+                            width: 1,
+                        },
+                        collisions: {
+                            enable: true,
+                        },
+                        move: {
+                            direction: "none",
+                            enable: true,
+                            outMode: "bounce",
+                            random: false,
+                            speed: 3,
+                            straight: false,
+                        },
+                        number: {
+                            density: {
+                                enable: true,
+                                area: 800,
+                            },
+                            value: 50,
+                        },
+                        opacity: {
+                            value: 0.5,
+                        },
+                        shape: {
+                            type: "line",
+                        },
+                        size: {
+                            value: 2,
+                        },
+                    },
+                    detectRetina: true,
+                }}
+            />
+
             {isLoading && <Preloader type={'circle'}/>}
             <div className={s.app}>
                 <Box>
                     <AppBar className={s.appBar} position="static">
                         <Toolbar className={s.barContainer}>
-                            <img className={s.logoImage} src={logo} alt="cinema" />
+                            <img className={s.logoImage} src={logo} alt="cinema"/>
                         </Toolbar>
                     </AppBar>
                 </Box>

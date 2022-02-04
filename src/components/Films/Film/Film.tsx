@@ -12,8 +12,9 @@ type PropsType = {
     type: string
     year: string
     filmId: string
+    animationDelay: number
 }
-export const Film = ({poster, title, type, year, filmId}: PropsType) => {
+export const Film = ({poster, title, type, year, filmId, animationDelay}: PropsType) => {
     const dispatch = useDispatch();
     let navigate = useNavigate();
 
@@ -26,24 +27,24 @@ export const Film = ({poster, title, type, year, filmId}: PropsType) => {
     }
 
     return (
-        <Grid className={s.cardWrapper} item>
-                <Card className={s.card} onClick={aboutFilmHandler} sx={{maxWidth: 345}} elevation={5}>
-                    <CardMedia component={'img'}
-                               image={poster !== 'N/A' ? poster : notFound}
-                               alt={'poster'}>
-                    </CardMedia>
+        <Grid className={s.cardWrapper} style={{animationDelay: `.${animationDelay}s`}} item>
+            <Card className={s.card} onClick={aboutFilmHandler} sx={{maxWidth: 345}} elevation={5}>
+                <CardMedia component={'img'}
+                           image={poster !== 'N/A' ? poster : notFound}
+                           alt={'poster'}>
+                </CardMedia>
 
-                    <CardContent className={s.aboutFilm}>
-                        <Typography className={s.title} gutterBottom variant="h6"
-                                    component="span">
-                            {title}
-                        </Typography>
-                        <Typography color="text.secondary">
-                            <span className={s.type}>{niceType}</span>
-                            <span className={s.year}>{year}</span>
-                        </Typography>
-                    </CardContent>
-                </Card>
+                <CardContent className={s.aboutFilm}>
+                    <Typography className={s.title} gutterBottom variant="h6"
+                                component="span">
+                        {title}
+                    </Typography>
+                    <Typography color="text.secondary">
+                        <span className={s.type}>{niceType}</span>
+                        <span className={s.year}>{year}</span>
+                    </Typography>
+                </CardContent>
+            </Card>
         </Grid>
     );
 }

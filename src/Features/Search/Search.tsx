@@ -14,18 +14,18 @@ export const Search = () => {
     const navigate = useNavigate();
     const inputValue = useSelector<AppRootType, string>(state => state.films.searchValue);
     const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(filmsSetSearchValue(e.currentTarget.value));
+        dispatch(filmsSetSearchValue({searchValue: e.currentTarget.value}));
     }
     const input = useRef<HTMLInputElement>(null);
     const onSearch = () => {
         if (inputValue.trim() !== '') {
             input.current?.blur();
             dispatch(getFilms(inputValue));
-            dispatch(filmsSetCurrentPage(1))
-            dispatch(filmsSetError(''));
+            dispatch(filmsSetCurrentPage({currentPage: 1}))
+            dispatch(filmsSetError({error: ''}));
             navigate('/');
         } else {
-            dispatch(filmsSetError('Input search value!'));
+            dispatch(filmsSetError({error: 'Type search value!'}));
         }
     }
     const onEnterSearch = (e: KeyboardEvent) => {

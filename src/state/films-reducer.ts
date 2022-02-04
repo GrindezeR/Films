@@ -2,7 +2,7 @@ import {Dispatch} from "redux";
 import {api} from "../API/api";
 import {appSetLoading} from "./app-reducer";
 import axios from "axios";
-import {Simulate} from "react-dom/test-utils";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 
 const initialState: InitialStateType = {
@@ -40,74 +40,81 @@ const initialState: InitialStateType = {
     searchValue: '',
 }
 
-export const filmsReducer = (state = initialState, action: ActionsType) => {
-    switch (action.type) {
-        case "FILMS/SET-DATA":
-            return {...state, ...action.data, totalResults: Number(action.data.totalResults)}
-        case "FILMS/SET-CURRENT-PAGE":
-            return {...state, currentPage: action.currentPage}
-        case "FILMS/SET-ERROR":
-            return {...state, error: action.error, Search: [], totalResults: 0}
-        case "FILMS/SET-FILM-INFO":
-            return {...state, aboutFilm: action.filmData}
-        case "FILMS/SET-SEARCH-VALUE":
-            return {...state, searchValue: action.searchValue}
-        default:
-            return state;
+const slice = createSlice({
+    name: 'films',
+    initialState: initialState,
+    reducers: {
+        filmsSetData(state, action: PayloadAction<{ data: FilmsListType }>) {
+            state.Search = action.payload.data.Search;
+            state.totalResults = action.payload.data.totalResults;
+        },
+        filmsSetError(state, action: PayloadAction<{ error: string }>) {
+            state.error = action.payload.error;
+        },
+        filmsSetCurrentPage(state, action: PayloadAction<{ currentPage: number }>) {
+            state.currentPage = action.payload.currentPage;
+        },
+        filmsSetFilmInfo(state, action: PayloadAction<{ filmData: AboutFilmType }>) {
+            state.aboutFilm = action.payload.filmData;
+        },
+        filmsSetSearchValue(state, action: PayloadAction<{ searchValue: string }>) {
+            state.searchValue = action.payload.searchValue;
+        },
     }
-}
+})
 
+export const filmsReducer = slice.reducer;
 
-type ActionsType = ReturnType<typeof filmsSetData>
-    | ReturnType<typeof filmsSetError>
-    | ReturnType<typeof filmsSetCurrentPage>
-    | ReturnType<typeof filmsSetFilmInfo>
-    | ReturnType<typeof filmsSetSearchValue>
+export const {filmsSetData} = slice.actions;
+export const {filmsSetError} = slice.actions;
+export const {filmsSetCurrentPage} = slice.actions;
+export const {filmsSetFilmInfo} = slice.actions;
+export const {filmsSetSearchValue} = slice.actions;
 
-export const filmsSetData = (data: FilmsListType) => ({type: 'FILMS/SET-DATA', data} as const)
-export const filmsSetError = (error: string) => ({type: 'FILMS/SET-ERROR', error} as const)
-export const filmsSetCurrentPage = (currentPage: number) => {
-    return {type: 'FILMS/SET-CURRENT-PAGE', currentPage} as const
-}
-export const filmsSetFilmInfo = (filmData: AboutFilmType) => {
-    return {type: 'FILMS/SET-FILM-INFO', filmData} as const
-}
-export const filmsSetSearchValue = (searchValue: string) => {
-    return {type: 'FILMS/SET-SEARCH-VALUE', searchValue} as const
-}
+// export const filmsSetData = (data: FilmsListType) => ({type: 'FILMS/SET-DATA', data} as const)
+// export const filmsSetError = (error: string) => ({type: 'FILMS/SET-ERROR', error} as const)
+// export const filmsSetCurrentPage = (currentPage: number) => {
+//     return {type: 'FILMS/SET-CURRENT-PAGE', currentPage} as const
+// }
+// export const filmsSetFilmInfo = (filmData: AboutFilmType) => {
+//     return {type: 'FILMS/SET-FILM-INFO', filmData} as const
+// }
+// export const filmsSetSearchValue = (searchValue: string) => {
+//     return {type: 'FILMS/SET-SEARCH-VALUE', searchValue} as const
+// }
 
 export const getFilms = (title: string, page?: number) => async (dispatch: Dispatch) => {
-    dispatch(appSetLoading(true));
+    dispatch(appSetLoading({status: true}));
     try {
         const response = await api.getFilmsBySearch(title, page)
         if (response.data.Response === 'True') {
-            dispatch(filmsSetData(response.data));
+            dispatch(filmsSetData({data: response.data}));
         } else {
-            dispatch(filmsSetError(response.data.Error));
+            dispatch(filmsSetError({error: response.data.Error}));
         }
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            dispatch(filmsSetError(e.message));
+            dispatch(filmsSetError({error: e.message}));
         }
     } finally {
-        dispatch(appSetLoading(false));
+        dispatch(appSetLoading({status: false}));
     }
 }
 export const getFilmInfo = (filmId: string) => async (dispatch: Dispatch) => {
-    dispatch(appSetLoading(true));
+    dispatch(appSetLoading({status: true}));
     try {
         const response = await api.getAboutFilm(filmId);
         if (response.data.Response === 'True') {
-            dispatch(filmsSetFilmInfo(response.data));
+            dispatch(filmsSetFilmInfo({filmData: response.data}));
         } else {
-            dispatch(filmsSetError(response.data.Error));
+            dispatch(filmsSetError({error: response.data.Error}));
         }
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            dispatch(filmsSetError(e.message));
+            dispatch(filmsSetError({error: e.message}));
         }
     } finally {
-        dispatch(appSetLoading(false));
+        dispatch(appSetLoading({status: false}));
     }
 }
 
