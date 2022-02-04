@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import notFound from "../../../common/images/notFound.png";
 import {useDispatch} from "react-redux";
 import {getFilmInfo} from "../../../state/films-reducer";
@@ -21,6 +21,10 @@ export const Film = ({poster, title, type, year, filmId, animationDelay}: PropsT
     let niceType = type.split('');
     niceType[0] = niceType[0].toUpperCase();
 
+    const onErrorImageLoad = (e: ChangeEvent<HTMLImageElement>) => {
+        e.currentTarget.src = notFound;
+    }
+
     const aboutFilmHandler = () => {
         dispatch(getFilmInfo(filmId))
         navigate('/about')
@@ -28,15 +32,15 @@ export const Film = ({poster, title, type, year, filmId, animationDelay}: PropsT
 
     return (
         <Grid className={s.cardWrapper} style={{animationDelay: `.${animationDelay}s`}} item>
-            <Card className={s.card} onClick={aboutFilmHandler} sx={{maxWidth: 345}} elevation={5}>
+            <Card className={s.card} onClick={aboutFilmHandler} sx={{maxWidth: 300}} elevation={5}>
                 <CardMedia component={'img'}
                            image={poster !== 'N/A' ? poster : notFound}
+                           onError={onErrorImageLoad}
                            alt={'poster'}>
                 </CardMedia>
 
                 <CardContent className={s.aboutFilm}>
-                    <Typography className={s.title} gutterBottom variant="h6"
-                                component="span">
+                    <Typography gutterBottom variant="h6" component="span">
                         {title}
                     </Typography>
                     <Typography color="text.secondary">

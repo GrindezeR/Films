@@ -42,8 +42,8 @@ function App() {
                     interactivity: {
                         events: {
                             onClick: {
-                                enable: false,
-                                mode: "push",
+                                enable: true,
+                                mode: "trail",
                             },
                             onHover: {
                                 enable: true,
@@ -54,7 +54,7 @@ function App() {
                         modes: {
                             bubble: {
                                 distance: 400,
-                                duration: 2,
+                                duration: 20,
                                 opacity: 0.8,
                                 size: 140,
                             },
@@ -64,11 +64,11 @@ function App() {
                             attract: {
                                 distance: 200,
                                 duration: 0.4,
-                                factor: 1
+                                factor: 2
                             },
                             repulse: {
                                 distance: 80,
-                                duration: 0.4,
+                                duration: 0.1,
                             },
                         },
                     },
@@ -126,12 +126,10 @@ function App() {
                 </Box>
 
                 <Search/>
-                <div className={s.content}>
-                    <Routes>
-                        <Route path={'/'} element={filmData.Search && <Films/>}/>
-                        <Route path={`/about`} element={filmData.aboutFilm.Title && <AboutFilm/>}/>
-                    </Routes>
-                </div>
+                <Routes>
+                    <Route path={'/'} element={filmData.Search && <Films/>}/>
+                    <Route path={`/about`} element={filmData.aboutFilm.Title && <AboutFilm/>}/>
+                </Routes>
             </div>
         </>
     );

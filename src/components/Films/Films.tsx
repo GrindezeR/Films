@@ -34,10 +34,8 @@ export const Films = () => {
                   container
                   rowSpacing={2}
                   columnSpacing={3}
-                  justifyContent={"center"}
-            >
+                  justifyContent={"center"}>
                 {films.error && <span className={s.error}>{films.error}</span>}
-
                 {filmList}
             </Grid>
             <div className={s.pagesWrapper}>

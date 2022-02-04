@@ -80,18 +80,6 @@ export const {filmsSetSearchValue} = slice.actions;
 export const {filmsClearData} = slice.actions;
 export const {filmsAboutClearData} = slice.actions;
 
-// export const filmsSetData = (data: FilmsListType) => ({type: 'FILMS/SET-DATA', data} as const)
-// export const filmsSetError = (error: string) => ({type: 'FILMS/SET-ERROR', error} as const)
-// export const filmsSetCurrentPage = (currentPage: number) => {
-//     return {type: 'FILMS/SET-CURRENT-PAGE', currentPage} as const
-// }
-// export const filmsSetFilmInfo = (filmData: AboutFilmType) => {
-//     return {type: 'FILMS/SET-FILM-INFO', filmData} as const
-// }
-// export const filmsSetSearchValue = (searchValue: string) => {
-//     return {type: 'FILMS/SET-SEARCH-VALUE', searchValue} as const
-// }
-
 export const getFilms = (title: string, page?: number) => async (dispatch: Dispatch) => {
     dispatch(appSetLoading({status: true}));
     try {
@@ -131,7 +119,7 @@ export type InitialStateType = {
     error: string
     currentPage: number
     aboutFilm: AboutFilmType
-    Search: searchFilmsType[]
+    Search: SearchFilmsType[]
     totalResults: number
     searchValue: string
 }
@@ -163,10 +151,10 @@ export type AboutFilmType = {
     Ratings: RatingsType[],
 };
 export type FilmsListType = {
-    Search: searchFilmsType[]
+    Search: SearchFilmsType[]
     totalResults: number
 }
-export type searchFilmsType = {
+export type SearchFilmsType = {
     Poster: string
     Title: string
     Type: string
