@@ -85,6 +85,7 @@ export const getFilms = (title: string, page?: number) => async (dispatch: Dispa
     try {
         const response = await api.getFilmsBySearch(title, page)
         if (response.data.Response === 'True') {
+            dispatch(filmsClearData());
             dispatch(filmsSetData({data: response.data}));
         } else {
             dispatch(filmsSetError({error: response.data.Error}));

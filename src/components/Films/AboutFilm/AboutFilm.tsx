@@ -8,7 +8,6 @@ import {Button, Paper} from "@mui/material";
 import noPoster from '../../../common/images/notFound.png';
 
 export const AboutFilm = () => {
-    const dispatch = useDispatch();
     const filmData = useSelector<AppRootType, AboutFilmType>(state => state.films.aboutFilm)
     const navigate = useNavigate();
 
@@ -38,7 +37,6 @@ export const AboutFilm = () => {
     })
 
     const onBackClickHandler = () => {
-        dispatch(filmsAboutClearData());
         navigate('/');
     }
 

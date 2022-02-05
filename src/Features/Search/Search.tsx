@@ -26,7 +26,6 @@ export const Search = () => {
     const onSearch = () => {
         if (inputValue.trim() !== '') {
             input.current?.blur();
-            dispatch(filmsClearData());
             dispatch(getFilms(inputValue));
             dispatch(filmsSetCurrentPage({currentPage: 1}))
             dispatch(filmsSetError({error: ''}));

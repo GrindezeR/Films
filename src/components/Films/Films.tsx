@@ -1,7 +1,7 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootType} from "../../state/store";
-import {filmsSetCurrentPage, getFilms, InitialStateType} from "../../state/films-reducer";
+import {filmsAboutClearData, filmsSetCurrentPage, getFilms, InitialStateType} from "../../state/films-reducer";
 import {Paginator} from "../../Features/Paginator/Paginator";
 import {Film} from "./Film/Film";
 import s from './Films.module.scss';
@@ -11,6 +11,10 @@ import Grid from "@mui/material/Grid";
 export const Films = () => {
     const dispatch = useDispatch();
     const films = useSelector<AppRootType, InitialStateType>(state => state.films)
+
+    useEffect(() => {
+        dispatch(filmsAboutClearData());
+    }, [])
 
     const getFilmsByPage = (page: number) => {
         dispatch(getFilms(films.searchValue, page));
