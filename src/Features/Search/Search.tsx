@@ -1,12 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useRef} from "react";
 import s from './Search.module.scss';
-import {
-    filmsClearData,
-    filmsSetCurrentPage,
-    filmsSetError,
-    filmsSetSearchValue,
-    getFilms
-} from "../../state/films-reducer";
+import {filmsSetCurrentPage, filmsSetError, filmsSetSearchValue, getFilms} from "../../state/films-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootType} from "../../state/store";
 import TextField from "@mui/material/TextField";

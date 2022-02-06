@@ -72,13 +72,15 @@ const slice = createSlice({
 
 export const filmsReducer = slice.reducer;
 
-export const {filmsSetData} = slice.actions;
-export const {filmsSetError} = slice.actions;
-export const {filmsSetCurrentPage} = slice.actions;
-export const {filmsSetFilmInfo} = slice.actions;
-export const {filmsSetSearchValue} = slice.actions;
-export const {filmsClearData} = slice.actions;
-export const {filmsAboutClearData} = slice.actions;
+export const {
+    filmsSetData,
+    filmsSetError,
+    filmsSetCurrentPage,
+    filmsSetFilmInfo,
+    filmsSetSearchValue,
+    filmsClearData,
+    filmsAboutClearData,
+} = slice.actions;
 
 export const getFilms = (title: string, page?: number) => async (dispatch: Dispatch) => {
     dispatch(appSetLoading({status: true}));

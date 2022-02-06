@@ -36,6 +36,7 @@ export const Films = () => {
         <div className={s.filmsWrapper}>
             <Grid className={s.filmsContainer}
                   container
+                  component={'div'}
                   rowSpacing={2}
                   columnSpacing={3}
                   justifyContent={"center"}>
