@@ -1,6 +1,6 @@
 import React from "react";
-import {AboutFilmType, filmsAboutClearData} from "../../../state/films-reducer";
-import {useDispatch, useSelector} from "react-redux";
+import {AboutFilmType} from "../../../state/films-reducer";
+import {useSelector} from "react-redux";
 import {AppRootType} from "../../../state/store";
 import {useNavigate} from "react-router-dom";
 import s from './AboutFilm.module.scss';
@@ -16,16 +16,21 @@ export const AboutFilm = () => {
 
         if (title !== 'Response') {
             if (typeof value === 'string') {
-                if (title !== 'Poster') {
-                    return <li key={index}><b>{title}</b>: {value}</li>
-                } else {
-                    return <li key={index}>
+                return title !== 'Poster' ?
+                    <li key={index}>
+                        <b>{title}</b>: {value}
+                    </li>
+                    :
+                    <li key={index}>
                         <b>{title}</b>: <a rel={'noreferrer'} target={'_blank'} href={value}>{value}</a>
                     </li>
-                }
+
             } else {
                 const ratingList = value.map((r, i) =>
-                    <div key={i}><b>{r.Source}</b> - {r.Value}</div>)
+                    <div key={i}>
+                        <b>{r.Source}</b> - {r.Value}
+                    </div>)
+
                 return (
                     <React.Fragment key={index}>
                         <li><b>{title}</b>:</li>
